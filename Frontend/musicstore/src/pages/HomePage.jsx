@@ -1,9 +1,10 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowRightIcon, TruckIcon, ShieldCheckIcon, AcademicCapIcon, SupportIcon } from '@heroicons/react/outline';
+import { TruckIcon, ShieldCheckIcon, AcademicCapIcon, SupportIcon, ArrowRightIcon, MailIcon } from '@heroicons/react/outline';
 import BookCard from '../components/BookCard';
 import FeaturedBooks from '../components/FeaturedBooks';
 import NewBook from '../components/Newbooks';
+import Banner from "../components/Banner";
 const HomePage = () => {
   const featuredBooks = [
 
@@ -32,19 +33,50 @@ const HomePage = () => {
       </section>
 
       {/* Features */}
+      <Banner />
+ <section className="py-8 bg-gray-50"> 
+  <div className="container mx-auto px-4">
+    <div className="grid md:grid-cols-4 gap-6">
+
+      <div className="text-center group">
+        <TruckIcon className="h-10 w-10 mx-auto text-blue-600 mb-2 group-hover:text-blue-800 transition-colors" />
+        <h3 className="text-lg font-semibold text-pink-500">จัดส่งเร็ว</h3>
+      </div>
+
+      <div className="text-center group">
+        <ShieldCheckIcon className="h-10 w-10 mx-auto text-blue-600 mb-2 group-hover:text-blue-800 transition-colors" />
+        <h3 className="text-lg font-semibold text-pink-500">สินค้าของแท้ 100%</h3>
+      </div>
+
+      <div className="text-center group">
+        <AcademicCapIcon className="h-10 w-10 mx-auto text-blue-600 mb-2 group-hover:text-blue-800 transition-colors" />
+        <h3 className="text-lg font-semibold text-pink-500">มีคำแนะนำจากผู้เชี่ยวชาญ</h3>
+      </div>
+
+      <div className="text-center group">
+        <SupportIcon className="h-10 w-10 mx-auto text-blue-600 mb-2 group-hover:text-blue-800 transition-colors" />
+        <h3 className="text-lg font-semibold text-pink-500">มีบริการหลังการขาย</h3>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+      
 
 
       {/* Categories */}
       <section className="py-16">
         <div className="container mx-auto px-4">
-          <h2 className="text-3xl font-bold text-sky-600 text-center mb-12">หมวดหมู่สินค้า</h2>
+          <h2 className="text-3xl font-bold text-sky-600 text-left mb-4">หมวดหมู่สินค้า <span className="text-sky-500 text-3xl">🎵</span></h2>
+          <div className="h-[3px] bg-gradient-to-r from-yellow-400 to-yellow-100 w-full mb-12 rounded-full"></div>
 
           <div className="grid md:grid-cols-3 gap-6">
             {instrumentCategories.map((category) => (
               <Link
                 key={category.slug}
                 to={`/categories/${category.slug}`}
-                className="flex items-center border border-yellow-400 rounded-2xl bg-yellow-100 px-4 py-3 shadow-sm hover:shadow-md transition-shadow"
+                  className="flex items-center border-2 border-sky-400 rounded-2xl px-4 py-3 shadow-sm hover:shadow-md transition-shadow"
               >
                 <img
                   src={category.image}
@@ -70,7 +102,8 @@ const HomePage = () => {
       {/* หนังสือใหม่ */}
       <section className="py-16">
         <div className="container mx-auto px-4">
-          <h2 className="text-3xl text-sky-600 font-bold text-center mb-12">สินค้าใหม่</h2>
+          <h2 className="text-3xl text-sky-600 font-bold text-left mb-12">สินค้าใหม่ <span className="text-sky-500 text-3xl">🎵</span></h2>
+          <div className="h-[3px] bg-gradient-to-r  from-yellow-400 to-yellow-100 w-full mb-12 rounded-full"></div>
           <NewBook />
         </div>
       </section>
@@ -78,7 +111,8 @@ const HomePage = () => {
       {/* Featured Books */}
       <section className="py-16 bg-gray-50">
         <div className="container mx-auto px-4">
-          <h2 className="text-3xl text-sky-600 font-bold text-center mb-12">สินค้าแนะนำ</h2>
+          <h2 className="text-3xl text-sky-600 font-bold text-left mb-12">สินค้าแนะนำ <span className="text-sky-500 text-3xl">🎵</span></h2>
+          <div className="h-[3px] bg-gradient-to-r  from-yellow-400 to-yellow-100 w-full mb-12 rounded-full"></div>
           <FeaturedBooks />
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
             {featuredBooks.map(book => (
@@ -86,12 +120,6 @@ const HomePage = () => {
             ))}
           </div>
           <div className="text-center mt-8">
-            <Link to="/books" className="inline-flex items-center text-viridian-600
-              hover:text-viridian-700 font-semibold text-lg group">
-              ดูหนังสือทั้งหมด
-              <ArrowRightIcon className="ml-2 h-5 w-5 group-hover:translate-x-2
-                transition-transform" />
-            </Link>
           </div>
         </div>
       </section>
@@ -147,18 +175,15 @@ const HomePage = () => {
               </div>
               <h3 className="text-xl font-semibold mb-2">มีคำแนะนำจากผู้เชี่ยวชาญ</h3>
             </div>
-
-            <div className="text-center group">
-              <div className="bg-pink-100 p-4 rounded-full w-20 h-20 mx-auto mb-4
-          group-hover:bg-pink-200 transition-colors">
-                <SupportIcon className="h-12 w-12 text-pink-600" />
-              </div>
-              <h3 className="text-xl font-semibold mb-2">มีบริการหลังการขาย</h3>
+            <div className="bg-sky-500 px-5 flex items-center justify-center">
+              <MailIcon className="h-6 w-6 text-white" />
             </div>
+          </a>
 
-          </div>
         </div>
       </section>
+
+
 
     </div>
   );

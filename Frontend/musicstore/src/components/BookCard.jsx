@@ -1,133 +1,92 @@
-import React, { useState } from 'react';
-import { HeartIcon, ShoppingCartIcon, StarIcon } from '@heroicons/react/outline';
-import { HeartIcon as HeartSolidIcon, StarIcon as StarSolidIcon } from '@heroicons/react/solid';
-import { Link } from 'react-router-dom';
+import React, { useState } from "react";
+import { HeartIcon} from "@heroicons/react/outline";
+import { HeartIcon as HeartSolidIcon } from "@heroicons/react/solid";
+import { Link } from "react-router-dom";
 
 const BookCard = ({ book }) => {
   const [isFavorite, setIsFavorite] = useState(false);
   const [isInCart, setIsInCart] = useState(false);
 
+  // กัน error เผื่อ book ยังไม่มา
+  if (!book) return null;
+
   const handleAddToCart = (e) => {
     e.preventDefault();
     setIsInCart(!isInCart);
-    // Add cart logic here
   };
 
   const handleToggleFavorite = (e) => {
     e.preventDefault();
     setIsFavorite(!isFavorite);
-    // Add favorite logic here
   };
 
+  // map field ที่เราต้องใช้
+  const {
+    id,
+    name,
+    instrument_type,
+    brand,
+    price,
+    image,
+  } = book;
+
   return (
-    <Link to={`/books/${book.id}`} className="block">
-      <div className="bg-white rounded-xl shadow-lg overflow-hidden group 
-        hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-1">
-        
-        {/* Book Cover */}
-        <div className="relative h-80 bg-gradient-to-br from-gray-100 to-gray-200">
-          <img 
-            src={book.coverImage || '/images/books/placeholder-book.jpg'} 
-            alt={book.title}
-            className="w-full h-full object-cover"
-          />
-          
-          {/* Badges */}
-          {book.isNew && (
-            <span className="absolute top-3 left-3 bg-green-500 text-white px-3 py-1 
-              rounded-full text-xs font-semibold">
-              ใหม่
-            </span>
-          )}
-          {book.discount && (
-            <span className="absolute top-3 right-3 bg-red-500 text-white px-3 py-1 
-              rounded-full text-xs font-semibold">
-              -{book.discount}%
-            </span>
-          )}
-          
-          {/* Quick Actions - Show on Hover */}
-          <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-40 
-            transition-all duration-300 flex items-center justify-center">
-            <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-300 
-              flex gap-3">
-              <button 
-                onClick={handleToggleFavorite}
-                className="p-3 bg-white rounded-full hover:bg-red-50 transition-colors"
-              >
-                {isFavorite ? (
-                  <HeartSolidIcon className="h-6 w-6 text-red-500" />
-                ) : (
-                  <HeartIcon className="h-6 w-6 text-gray-700" />
-                )}
-              </button>
-              <button 
-                onClick={handleAddToCart}
-                className="p-3 bg-white rounded-full hover:bg-viridian-50 transition-colors"
-              >
-                <ShoppingCartIcon className={`h-6 w-6 ${
-                  isInCart ? 'text-viridian-600' : 'text-gray-700'
-                }`} />
-              </button>
-            </div>
+    <Link to={`/books/${id}`} className="block">
+      <div className="bg-white rounded-3xl shadow-xl overflow-hidden w-full max-w-xs mx-auto
+        hover:shadow-2xl hover:-translate-y-1 transition-all duration-300">
+
+        {/* IMAGE */}
+        <div className="p-4 pb-0">
+          <div className="w-full h-40 rounded-2xl overflow-hidden bg-gradient-to-br from-slate-100 to-slate-200">
+            <img
+              src={image || "/images/instruments/placeholder.png"}
+              alt={name}
+              className="w-full h-full object-cover"
+            />
           </div>
         </div>
-        
-        {/* Book Details */}
-        <div className="p-5">
-          {/* Category */}
-          <p className="text-xs text-viridian-600 font-semibold uppercase tracking-wider mb-2">
-            {book.category}
+
+        {/* DETAILS */}
+        <div className="px-5 py-4 flex flex-col gap-2">
+          <p className="text-lg font-bold text-gray-900 line-clamp-1">
+            {name}
           </p>
-          
-          {/* Title */}
-          <h3 className="text-lg font-bold text-gray-900 mb-1 line-clamp-1 
-            group-hover:text-viridian-600 transition-colors">
-            {book.title}
-          </h3>
-          
-          {/* Author */}
-          <p className="text-sm text-gray-600 mb-3">โดย {book.author}</p>
-          
-          {/* Rating */}
-          <div className="flex items-center mb-3">
-            <div className="flex text-yellow-400">
-              {[...Array(5)].map((_, i) => (
-                i < Math.floor(book.rating || 0) ? (
-                  <StarSolidIcon key={i} className="h-4 w-4" />
-                ) : (
-                  <StarIcon key={i} className="h-4 w-4" />
-                )
-              ))}
-            </div>
-            <span className="text-sm text-gray-600 ml-2">
-              ({book.reviews || 0} รีวิว)
-            </span>
-          </div>
-          
-          {/* Price */}
-          <div className="flex items-center justify-between">
-            <div>
-              {book.originalPrice && book.originalPrice !== book.price && (
-                <span className="text-sm text-gray-400 line-through mr-2">
-                  ฿{book.originalPrice}
-                </span>
-              )}
-              <span className="text-2xl font-bold text-viridian-600">
-                ฿{book.price}
-              </span>
-            </div>
-            
-            <button 
-              onClick={handleAddToCart}
-              className={`px-4 py-2 rounded-lg font-semibold transition-all duration-200 
-                ${isInCart 
-                  ? 'bg-green-500 text-white hover:bg-green-600' 
-                  : 'bg-viridian-600 text-white hover:bg-viridian-700'
-                }`}>
-              {isInCart ? 'ในตะกร้า' : 'เพิ่มลงตะกร้า'}
-            </button>
-          </div>
+
+          <p className="text-sm text-gray-600">
+            ประเภท: <span className="font-medium text-gray-800">{instrument_type}</span>
+          </p>
+
+          <p className="text-sm text-gray-600">
+            ยี่ห้อ: <span className="font-medium text-gray-800">{brand}</span>
+          </p>
+
+          <p className="text-xl font-bold text-emerald-600 mt-1">
+            ฿{price}
+          </p>
+        </div>
+
+        {/* ACTION BUTTONS */}
+        <div className="border-t border-gray-100 px-5 py-4 flex items-center gap-3">
+          <button
+            onClick={handleToggleFavorite}
+            className="w-10 h-10 rounded-full border border-slate-200 flex items-center justify-center
+            hover:border-pink-300 hover:bg-pink-50 transition-colors"
+          >
+            {isFavorite ? (
+              <HeartSolidIcon className="h-5 w-5 text-pink-500" />
+            ) : (
+              <HeartIcon className="h-5 w-5 text-slate-500" />
+            )}
+          </button>
+
+          <button
+            onClick={handleAddToCart}
+            className={`flex-1 py-2.5 rounded-full text-sm font-semibold text-white shadow-md
+              transition-all duration-200
+              ${isInCart ? "bg-emerald-500 hover:bg-emerald-600" : "bg-pink-500 hover:bg-pink-600"}`}
+          >
+            {isInCart ? "อยู่ในตะกร้าแล้ว" : "เพิ่มลงตะกร้า"}
+          </button>
         </div>
       </div>
     </Link>
