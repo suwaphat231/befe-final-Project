@@ -14,10 +14,7 @@ const BookListPage = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const booksPerPage = 12;
   
-  const categories = [
-    'all', 'fiction', 'non-fiction', 'science', 'history', 'art', 
-    'psychology', 'business', 'technology', 'cooking'
-  ];
+  const categories = ['all', 'Piano & Keyboard', 'Guitars & Bass', 'Woodwind', 'Brass Instruments', 'Drum','Accessories'];
 
   useEffect(() => {
     // Load books from data
@@ -89,8 +86,8 @@ const BookListPage = () => {
       <div className="container mx-auto px-4 py-8">
         {/* Page Header */}
         <div className="mb-8">
-          <h1 className="text-4xl font-bold text-gray-900 mb-4">หนังสือทั้งหมด</h1>
-          <p className="text-gray-600">ค้นพบหนังสือที่คุณชื่นชอบจากคอลเล็กชันของเรา</p>
+          <h1 className="text-4xl font-bold text-gray-900 mb-4">เครื่องดนตรีทั้งหมด</h1>
+          <p className="text-gray-600">ค้นพบเครื่องดนตรีที่คุณชื่นชอบจากคอลเล็กชันของเรา</p>
         </div>
         
         {/* Filters and Search */}
@@ -109,15 +106,12 @@ const BookListPage = () => {
               onChange={(e) => handleCategoryFilter(e.target.value)}
             >
               <option value="all">ทุกหมวดหมู่</option>
-              <option value="fiction">นิยาย</option>
-              <option value="non-fiction">สารคดี</option>
-              <option value="science">วิทยาศาสตร์</option>
-              <option value="history">ประวัติศาสตร์</option>
-              <option value="art">ศิลปะ</option>
-              <option value="psychology">จิตวิทยา</option>
-              <option value="business">ธุรกิจ</option>
-              <option value="technology">เทคโนโลยี</option>
-              <option value="cooking">อาหาร</option>
+              <option value="Piano & Keyboard">เปียโน & คีย์บอร์ด</option>
+              <option value="Guitars & Bass">กีตาร์ & เบส</option>
+              <option value="Woodwind">เครื่องลมไม้</option>
+              <option value="Brass Instruments">เครื่องลมทองเหลือง</option>
+              <option value="Drum">กลอง</option>
+              <option value="Accessories">อุปกรณ์เพิ่มเติม</option>
             </select>
             
             {/* Sort */}
@@ -136,7 +130,7 @@ const BookListPage = () => {
           
           {/* Results count */}
           <div className="mt-4 text-sm text-gray-600">
-            พบหนังสือ {filteredBooks.length} เล่ม
+            พบเครื่องดนตรีจำนวน {filteredBooks.length} 
             {selectedCategory !== 'all' && ` ในหมวด ${selectedCategory}`}
           </div>
         </div>

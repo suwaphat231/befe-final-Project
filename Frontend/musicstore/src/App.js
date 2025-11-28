@@ -33,7 +33,7 @@ function App() {
             <main className="flex-grow bg-gray-50">
               <Routes>
                 <Route path="/" element={<HomePage />} />
-                <Route path="/books" element={<BookListPage />} />
+                <Route path="/listpage" element={<BookListPage />} />
                 <Route path="/books/:id" element={<BookDetailPage />} />
                 <Route path="/categories" element={<CategoryPage />} />
                 <Route path="/categories/:category" element={<CategoryPage />} />
