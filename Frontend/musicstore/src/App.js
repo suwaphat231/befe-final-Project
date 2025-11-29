@@ -16,6 +16,8 @@ import ContactPage from './pages/ContactPage';
 import LoginPage from './pages/LoginPage';
 import AddBookPage from './pages/AddBookPage';
 import AllBookPage from './pages/AllBookPage';
+import Musical from './pages/Musical';
+
 
 function App() {
   return (
@@ -33,6 +35,7 @@ function App() {
             <main className="flex-grow bg-gray-50">
               <Routes>
                 <Route path="/" element={<HomePage />} />
+                <Route path="/instruments" element={<Instrument/>} />
                 <Route path="/listpage" element={<BookListPage />} />
                 <Route path="/books/:id" element={<BookDetailPage />} />
                 <Route path="/categories" element={<CategoryPage />} />
@@ -40,6 +43,7 @@ function App() {
                 <Route path="/about" element={<AboutPage />} />
                 <Route path="/contact" element={<ContactPage />} />
                 <Route path="*" element={<NotFound />} />
+                <Route path="/musical" element={<Musical />} />
               </Routes>
             </main>
             <Footer />
