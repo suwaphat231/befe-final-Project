@@ -1,20 +1,30 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { HomeIcon, BookOpenIcon } from '@heroicons/react/outline';
+import { HomeIcon } from '@heroicons/react/outline';
 
 const NotFound = () => {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-viridian-100 to-purple-100 
-      flex items-center justify-center px-4">
-      <div className="text-center">
-        <h1 className="text-9xl font-bold text-viridian-600 mb-4">404</h1>
-        <p className="text-3xl font-semibold text-gray-800 mb-4">
-          ไม่พบหน้าที่คุณค้นหา
+    <div
+      className="min-h-screen flex items-center justify-center px-4 relative bg-cover bg-center"
+      style={{
+        backgroundImage: "url('/images/instruments/error.png')" 
+      }}
+    >
+      <div className="absolute inset-0 bg-white/60 backdrop-blur-sm"></div>
+
+      <div className="text-center relative z-10">
+        <h1 className="text-9xl text-gray-700 font-bold text-black  drop-shadow mb-4">
+          404
+        </h1>
+
+        <p className="text-3xl  font-semibold text-black  mb-4">
+          ไม่พบทางที่คุณกำลังเดินไป
         </p>
-        <p className="text-gray-600 mb-8 max-w-md mx-auto">
-          อุ๊ปส์! ดูเหมือนว่าหน้าที่คุณพยายามเข้าถึงไม่มีอยู่ 
-          อาจจะถูกย้ายหรือลบไปแล้ว
+
+        <p className="text-black mb-8 max-w-md mx-auto">
+          อุ๊ปส์! ดูเหมือนว่าคุณกำลังเดินห่างไปไกลจากเสียงดนตรีนะ 🎵
         </p>
+
         <div className="flex flex-col sm:flex-row gap-4 justify-center">
           <Link 
             to="/"

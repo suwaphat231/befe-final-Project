@@ -18,6 +18,7 @@ import AddBookPage from './pages/AddBookPage';
 import AllBookPage from './pages/AllBookPage';
 import Musical from './pages/Musical';
 
+
 function App() {
   return (
     <Router>
@@ -34,6 +35,7 @@ function App() {
             <main className="flex-grow bg-gray-50">
               <Routes>
                 <Route path="/" element={<HomePage />} />
+                <Route path="/instruments" element={<Instrument/>} />
                 <Route path="/listpage" element={<BookListPage />} />
                 <Route path="/books/:id" element={<BookDetailPage />} />
                 <Route path="/categories" element={<CategoryPage />} />
