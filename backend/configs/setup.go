@@ -1,44 +1,26 @@
 package configs
 
 import (
-	"context"
-	"fmt"
 	"log"
 	"os"
-	"time"
 
-	"go.mongodb.org/mongo-driver/mongo"
-	"go.mongodb.org/mongo-driver/mongo/options"
+	"gorm.io/driver/postgres"
+	"gorm.io/gorm"
 )
 
-func ConnectDB() *mongo.Client {
-	client, err := mongo.NewClient(options.Client().ApplyURI(os.Getenv("MONGO_URI")))
-	if err != nil {
-		log.Fatal(err)
+var DB *gorm.DB
+
+func ConnectDB() {
+	dsn := os.Getenv("DATABASE_URL")
+	if dsn == "" {
+		dsn = "postgres://musicstore_user:your_strong_password@localhost:5432/musicstore?sslmode=disable"
 	}
 
-	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
-	defer cancel()
-
-	err = client.Connect(ctx)
+	db, err := gorm.Open(postgres.Open(dsn), &gorm.Config{})
 	if err != nil {
-		log.Fatal(err)
+		log.Fatal("Failed to connect to database:", err)
 	}
 
-	// Ping database เพื่อเช็คว่าต่อติดไหม
-	err = client.Ping(ctx, nil)
-	if err != nil {
-		log.Fatal(err)
-	}
-
-	fmt.Println("Connected to MongoDB!")
-	return client
-}
-
-// สร้างตัวแปร Collection สินค้า เพื่อเรียกใช้จากไฟล์อื่น
-var DB *mongo.Client = ConnectDB()
-
-func GetCollection(client *mongo.Client, collectionName string) *mongo.Collection {
-	collection := client.Database("music-shop").Collection(collectionName)
-	return collection
+	log.Println("Connected to PostgreSQL!")
+	DB = db
 }

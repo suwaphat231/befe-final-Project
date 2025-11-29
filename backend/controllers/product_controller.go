@@ -1,74 +1,40 @@
 package controllers
 
 import (
-	"context"
-	"net/http"
-	"time"
-
 	"backend/configs"
 	"backend/models"
+	"net/http"
 
 	"github.com/gin-gonic/gin"
-	"go.mongodb.org/mongo-driver/bson"
-	"go.mongodb.org/mongo-driver/bson/primitive"
-	"go.mongodb.org/mongo-driver/mongo"
 )
 
-var productCollection *mongo.Collection = configs.GetCollection(configs.DB, "products")
-
-// CreateProduct - เพิ่มสินค้าใหม่
+// CreateProduct - เพิ่มสินค้า
 func CreateProduct(c *gin.Context) {
-	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
 	var product models.Product
-	defer cancel()
 
-	// ตรวจสอบว่า JSON ที่ส่งมาถูกต้องตาม Struct ไหม
-	if err := c.BindJSON(&product); err != nil {
+	// รับค่าจาก JSON
+	if err := c.ShouldBindJSON(&product); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
 
-	newProduct := models.Product{
-		ID:           primitive.NewObjectID(),
-		Name:         product.Name,
-		Brand:        product.Brand,
-		Category:     product.Category,
-		Description:  product.Description,
-		Price:        product.Price,
-		CountInStock: product.CountInStock,
-		ImageUrl:     product.ImageUrl,
-		Specs:        product.Specs,
-	}
-
-	_, err := productCollection.InsertOne(ctx, newProduct)
-	if err != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{"error": "Error creating product"})
+	// บันทึกลง PostgreSQL
+	if err := configs.DB.Create(&product).Error; err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
 	}
 
-	c.JSON(http.StatusCreated, gin.H{"message": "Product created successfully", "data": newProduct})
+	c.JSON(http.StatusCreated, gin.H{"message": "Product created successfully", "data": product})
 }
 
 // GetAllProducts - ดึงสินค้าทั้งหมด
 func GetAllProducts(c *gin.Context) {
-	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
 	var products []models.Product
-	defer cancel()
 
-	results, err := productCollection.Find(ctx, bson.M{})
-	if err != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{"error": "Error fetching products"})
+	// ดึงข้อมูลทั้งหมด
+	if err := configs.DB.Find(&products).Error; err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
-	}
-
-	defer results.Close(ctx)
-	for results.Next(ctx) {
-		var singleProduct models.Product
-		if err = results.Decode(&singleProduct); err != nil {
-			c.JSON(http.StatusInternalServerError, gin.H{"error": "Error decoding product"})
-			return
-		}
-		products = append(products, singleProduct)
 	}
 
 	c.JSON(http.StatusOK, products)
@@ -76,23 +42,50 @@ func GetAllProducts(c *gin.Context) {
 
 // GetProductByID - ดึงสินค้าตาม ID
 func GetProductByID(c *gin.Context) {
-	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
-	productId := c.Param("productId")
+	id := c.Param("productId")
 	var product models.Product
-	defer cancel()
 
-	// แปลง String เป็น ObjectID ของ Mongo
-	objId, err := primitive.ObjectIDFromHex(productId)
-	if err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid product ID format"})
-		return
-	}
-
-	err = productCollection.FindOne(ctx, bson.M{"_id": objId}).Decode(&product)
-	if err != nil {
+	// ค้นหาตัวแรกที่เจอ ID ตรงกัน
+	if err := configs.DB.First(&product, id).Error; err != nil {
 		c.JSON(http.StatusNotFound, gin.H{"error": "Product not found"})
 		return
 	}
 
 	c.JSON(http.StatusOK, product)
+}
+
+// UpdateProduct - แก้ไขสินค้า
+func UpdateProduct(c *gin.Context) {
+	id := c.Param("productId")
+	var product models.Product
+
+	// ค้นหาตัวแรกที่เจอ ID ตรงกัน
+	if err := configs.DB.First(&product, id).Error; err != nil {
+		c.JSON(http.StatusNotFound, gin.H{"error": "Product not found"})
+		return
+	}
+
+	// รับค่าจาก JSON
+	if err := c.ShouldBindJSON(&product); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+
+	configs.DB.Save(&product)
+	c.JSON(http.StatusOK, gin.H{"message": "Product updated successfully", "data": product})
+}
+
+// DeleteProduct - ลบสินค้า
+func DeleteProduct(c *gin.Context) {
+	id := c.Param("productId")
+	var product models.Product
+
+	// ค้นหาตัวแรกที่เจอ ID ตรงกัน
+	if err := configs.DB.First(&product, id).Error; err != nil {
+		c.JSON(http.StatusNotFound, gin.H{"error": "Product not found"})
+		return
+	}
+
+	configs.DB.Delete(&product)
+	c.JSON(http.StatusOK, gin.H{"message": "Product deleted successfully"})
 }
