@@ -34,14 +34,6 @@ const NotFound = () => {
             <HomeIcon className="h-5 w-5 mr-2" />
             กลับหน้าแรก
           </Link>
-          <Link 
-            to="/books"
-            className="inline-flex items-center px-6 py-3 bg-white text-black
-              font-semibold rounded-lg border-2 border-viridian-600 
-              hover:bg-viridian-50 transition-colors">
-            <BookOpenIcon className="h-5 w-5 mr-2" />
-            ดูเครื่องดนตรีทั้งหมด
-          </Link>
         </div>
       </div>
     </div>

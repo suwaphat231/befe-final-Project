@@ -17,6 +17,7 @@ import LoginPage from './pages/LoginPage';
 import AddBookPage from './pages/AddBookPage';
 import AllBookPage from './pages/AllBookPage';
 import Musical from './pages/Musical';
+import Instrument from './pages/Instrument';
 
 
 function App() {
