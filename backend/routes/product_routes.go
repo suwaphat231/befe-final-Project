@@ -7,7 +7,12 @@ import (
 )
 
 func ProductRoutes(router *gin.Engine) {
-	router.POST("/products", controllers.CreateProduct)
-	router.GET("/products", controllers.GetAllProducts)
-	router.GET("/products/:productId", controllers.GetProductByID)
+	product := router.Group("/products")
+	{
+		product.POST("/", controllers.CreateProduct)
+		product.GET("/", controllers.GetAllProducts)
+		product.GET("/:productId", controllers.GetProductByID)
+		product.PUT("/:productId", controllers.UpdateProduct)
+		product.DELETE("/:productId", controllers.DeleteProduct)
+	}
 }

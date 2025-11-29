@@ -1,16 +1,22 @@
 package models
 
-import "go.mongodb.org/mongo-driver/bson/primitive"
+import (
+	"time"
+)
 
 type Product struct {
-	ID           primitive.ObjectID `bson:"_id,omitempty" json:"id"`
-	Name         string             `bson:"name,omitempty" json:"name" binding:"required"`
-	Brand        string             `bson:"brand,omitempty" json:"brand" binding:"required"`
-	Category     string             `bson:"category,omitempty" json:"category" binding:"required"`
-	Description  string             `bson:"description,omitempty" json:"description"`
-	Price        float64            `bson:"price,omitempty" json:"price" binding:"required"`
-	CountInStock int                `bson:"countInStock,omitempty" json:"countInStock"`
-	ImageUrl     string             `bson:"imageUrl,omitempty" json:"imageUrl"`
+	ID           uint      `json:"id" gorm:"primaryKey"`
+	Name         string    `json:"name"`
+	Brand        string    `json:"brand"`
+	Category     string    `json:"category"`
+	Description  string    `json:"description"`
+	Price        float64   `json:"price"`
+	CountInStock int       `json:"countInStock" gorm:"column:count_in_stock"`
+	ImageURL     string    `json:"imageUrl" gorm:"column:image_url"`
+	CreatedAt    time.Time `json:"createdAt" gorm:"column:created_at"`
+	UpdatedAt    time.Time `json:"updatedAt" gorm:"column:updated_at"`
+}
 
-	Specs map[string]string `bson:"specs,omitempty" json:"specs"`
+func (Product) TableName() string {
+	return "products"
 }

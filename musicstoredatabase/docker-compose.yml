@@ -1,31 +1,31 @@
+version: '3.8'
+
 services:
-  db:
-    build: ./docker
-    container_name: bookstore_postgres
+  postgres:
+    image: postgres:15
+    container_name: musicstore_postgres
+    restart: always
     environment:
-      POSTGRES_DB: ${POSTGRES_DB}
       POSTGRES_USER: ${POSTGRES_USER}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
-    volumes:
-      - postgres_data:/var/lib/postgresql/data
+      POSTGRES_DB: ${POSTGRES_DB}
     ports:
       - "${POSTGRES_PORT}:5432"
-    restart: unless-stopped
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./docker/init.sql:/docker-entrypoint-initdb.d/init.sql
 
   pgadmin:
     image: dpage/pgadmin4
-    container_name: bookstore_pgadmin
+    container_name: musicstore_pgadmin
+    restart: always
+    ports:
+      - "${PGADMIN_PORT}:80"
     environment:
       PGADMIN_DEFAULT_EMAIL: ${PGADMIN_DEFAULT_EMAIL}
       PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_DEFAULT_PASSWORD}
-    volumes:
-      - pgadmin_data:/var/lib/pgadmin
-    ports:
-      - "${PGADMIN_PORT}:80"
-    restart: unless-stopped
     depends_on:
-      - db
+      - postgres
 
 volumes:
   postgres_data:
-  pgadmin_data:
