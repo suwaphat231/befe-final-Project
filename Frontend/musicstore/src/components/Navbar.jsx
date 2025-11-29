@@ -3,6 +3,7 @@ import { Link, NavLink } from 'react-router-dom';
 import { ShoppingCartIcon, SearchIcon, UserIcon, MenuIcon, XIcon } from '@heroicons/react/outline';
 import { FaMusic } from "react-icons/fa";
 
+
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [cartCount] = useState(3);
@@ -39,17 +40,18 @@ const Navbar = () => {
             </NavLink>
 
             <NavLink
-              to="/books"
-              className={({ isActive }) =>
-                `px-4 py-1 rounded-full text-sm font-medium transition-all duration-200
+              to="/musical"
+               className={({ isActive }) =>
+                 `px-4 py-1 rounded-full text-sm font-medium transition-all duration-200
                  ${isActive
-                   ? 'bg-yellow-300 text-gray-700 shadow-md -translate-y-0.5'
-                   : 'text-gray-700 hover:bg-blue-400 hover:text-white hover:-translate-y-0.5'
-                 }`
-              }
-            >
+                  ? 'bg-yellow-300 text-gray-700 shadow-md -translate-y-0.5'
+                  : 'text-gray-700 hover:bg-blue-400 hover:text-white hover:-translate-y-0.5'
+                }`
+            }
+          >
               เครื่องดนตรี
             </NavLink>
+
 
             <NavLink
               to="/listpage"

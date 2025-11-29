@@ -16,6 +16,7 @@ import ContactPage from './pages/ContactPage';
 import LoginPage from './pages/LoginPage';
 import AddBookPage from './pages/AddBookPage';
 import AllBookPage from './pages/AllBookPage';
+import Musical from './pages/Musical';
 
 function App() {
   return (
@@ -40,6 +41,7 @@ function App() {
                 <Route path="/about" element={<AboutPage />} />
                 <Route path="/contact" element={<ContactPage />} />
                 <Route path="*" element={<NotFound />} />
+                <Route path="/musical" element={<Musical />} />
               </Routes>
             </main>
             <Footer />
