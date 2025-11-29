@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { LockClosedIcon, UserIcon, UserCircleIcon } from "@heroicons/react/outline";
+import { LockClosedIcon, UserIcon} from "@heroicons/react/outline";
 
 const LoginPage = () => {
   const [username, setUsername] = useState("");
@@ -35,8 +35,7 @@ const LoginPage = () => {
           <span className="absolute right-10 top-8 text-base text-pink-300/60 rotate-12">♪</span>
           <span className="absolute left-14 bottom-2 text-sm text-amber-300/60 -rotate-6">♫</span>
 
-          <div className="rounded-full bg-sky-200 shadow-md flex items-center justify-center border border-white/60">
-            <UserCircleIcon className="h-10 md:h-12 text-white drop-shadow" />
+          <div className="flex items-center justify-center border border-white/60">
           </div>
 
           <h2 className="mt-3 text-lg font-semibold text-yellow-500 tracking-wide">

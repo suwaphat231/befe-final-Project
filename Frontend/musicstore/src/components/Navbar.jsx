@@ -39,7 +39,7 @@ const Navbar = () => {
             </NavLink>
 
             <NavLink
-              to="/books"
+              to="/instruments"
               className={({ isActive }) =>
                 `px-4 py-1 rounded-full text-sm font-medium transition-all duration-200
                  ${isActive

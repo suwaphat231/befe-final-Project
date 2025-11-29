@@ -3,7 +3,7 @@ import React from "react";
 const Banner = ({
   title = "Jump into the vast world of music.",
   subtitle = "Trending Item",
-  buttonText = "Click me 🎵~",
+  buttonText = "Click me 🎵",
   imageSrc = "/images/instruments/guitarban.png", 
 }) => {
   return (

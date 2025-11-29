@@ -16,6 +16,7 @@ import ContactPage from './pages/ContactPage';
 import LoginPage from './pages/LoginPage';
 import AddBookPage from './pages/AddBookPage';
 import AllBookPage from './pages/AllBookPage';
+import Instrument from './pages/Instrument';
 
 function App() {
   return (
@@ -33,6 +34,7 @@ function App() {
             <main className="flex-grow bg-gray-50">
               <Routes>
                 <Route path="/" element={<HomePage />} />
+                <Route path="/instruments" element={<Instrument/>} />
                 <Route path="/listpage" element={<BookListPage />} />
                 <Route path="/books/:id" element={<BookDetailPage />} />
                 <Route path="/categories" element={<CategoryPage />} />
